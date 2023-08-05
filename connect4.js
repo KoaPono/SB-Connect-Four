@@ -5,13 +5,23 @@
  * board fills (tie)
  */
 
+class Player {
+  constructor(name, color) {
+    this.name = name;
+    this.color = color;
+  }
+}
+
 class Game {
-	constructor(height = 6, width = 7) {
+	constructor(height = 6, width = 7, player1 = new Player("1", "#EF6262"), player2 = new Player("2", "#1D5B79")) {
 		this.width = width;
 		this.height = height;
-		this.currPlayer = 1;
 		this.board = [];
 		this.gameOver = false;
+
+    this.player1 = player1;
+    this.player2 = player2;
+    this.currPlayer = player1;
 
 		this.makeBoard();
 		this.makeHtmlBoard();
@@ -68,8 +78,8 @@ class Game {
 	placeInTable(y, x) {
 		let { currPlayer } = this;
 		const piece = document.createElement("div");
-		piece.classList.add("piece");
-		piece.classList.add(`p${currPlayer}`);
+		piece.classList.add("piece");``
+    piece.setAttribute("style", `background-color:${currPlayer.color}`);
 		piece.style.top = -50 * (y + 2);
 
 		const spot = document.getElementById(`${y}-${x}`);
@@ -95,7 +105,7 @@ class Game {
 					y < height &&
 					x >= 0 &&
 					x < width &&
-					board[y][x] === currPlayer
+					board[y][x] === currPlayer.name
 			);
 		}
 
@@ -150,12 +160,12 @@ class Game {
 			}
 
 			// place piece in board and add to HTML table
-			board[y][x] = currPlayer;
+			board[y][x] = currPlayer.name;
 			this.placeInTable(y, x);
 
 			// check for win
 			if (this.checkForWin()) {
-				return this.endGame(`Player ${currPlayer} won!`);
+				return this.endGame(`Player ${currPlayer.name} won!`);
 			}
 
 			// check for tie
@@ -164,20 +174,15 @@ class Game {
 			}
 
 			// switch players
-			this.currPlayer = currPlayer === 1 ? 2 : 1;
+			this.currPlayer = currPlayer.name === "1" ? this.player2 : this.player1;
 		}
 	}
 }
 
 const startButton = document.getElementById("gameStart");
 const boardElement = document.getElementById("board");
-
-const startGame = () => {
-  console.log(boardElement.childNodes);
-	clearBoard();
-  console.log(boardElement.childNodes);
-	new Game();
-};
+const player1Color = document.getElementById("player1Color");
+const player2Color = document.getElementById("player2Color");
 
 const clearBoard = () => {
   while (boardElement.firstChild) {
@@ -185,4 +190,10 @@ const clearBoard = () => {
   }
 };
 
-startButton.addEventListener("click", startGame);
+startButton.addEventListener("click", (evt) => {
+  evt.preventDefault();
+	clearBoard();
+  p1Color = player1Color.value ? player1Color.value : "#EF6262";
+  p2Color = player2Color.value ? player2Color.value : "#1D5B79";
+	new Game(6, 7, new Player("1", p1Color), new Player("2", p2Color));
+});
