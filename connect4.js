@@ -175,6 +175,7 @@ class Game {
 
 			// switch players
 			this.currPlayer = currPlayer.name === "1" ? this.player2 : this.player1;
+      playerTurn.innerText = `Player ${this.currPlayer.name}'s Turn`;
 		}
 	}
 }
@@ -183,6 +184,7 @@ const startButton = document.getElementById("gameStart");
 const boardElement = document.getElementById("board");
 const player1Color = document.getElementById("player1Color");
 const player2Color = document.getElementById("player2Color");
+const playerTurn = document.getElementById("playerTurn");
 
 const clearBoard = () => {
   while (boardElement.firstChild) {

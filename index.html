@@ -7,7 +7,7 @@
   <form>
     <div>
       <label for="player1Color">Player 1 Color</label>
-    <input type="text" id="player1Color" placeholder="#EF6262">
+      <input type="text" id="player1Color" placeholder="#EF6262">
     </div>
     <div>
       <label for="player2Color">Player 2 Color</label>
@@ -16,11 +16,12 @@
     <button id="gameStart">Start Game</button>
   </form>
 
-<div id="game">
-  <table id="board"></table>
-</div>
+  <h3 id="playerTurn">Player 1's Turn</h3>
 
-<script src="connect4.js"></script>
+  <div id="game">
+    <table id="board"></table>
+  </div>
 
+  <script src="connect4.js"></script>
 </body>
 </html>
